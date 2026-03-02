@@ -4,34 +4,33 @@ Collection of Python and Bash scripts for household automation tasks.
 
 ## Scripts
 
-### Python Scripts (requires: `pip install exifread requests beautifulsoup4`)
+### Python Scripts (requires: `pip install exifread requests`)
 
-- **Picture_Foldering.py** - Organize photos by year using EXIF metadata (⚠️ moves files)
-- **Picture_Foldering2.py** - Enhanced photo organizer
-- **reddit_scrape.py** - Download images from Reddit user submissions
-- **reddit_scrape2.py** - Enhanced Reddit scraper with pagination
+- **photo_organizer.py** - Organize photos by year/month/day using EXIF metadata (moves files)
+- **reddit_scraper.py** - Download images from Reddit user submissions with pagination
 
 ### Bash Scripts
 
-- **verify_backup.sh** - Verify backup integrity with SHA-1 hash comparison (⚠️ very slow)
+- **verify_backup.sh** - Verify backup integrity with SHA-1 hash comparison (very slow)
 
 ## Quick Start
 
 ```bash
 # Install Python dependencies
-pip install exifread requests beautifulsoup4
+pip install exifread requests
 
-# Organize photos by year
-python Picture_Foldering.py  # Edit script first: set root_path
+# Organize photos by date
+cd /path/to/photos
+python photo_organizer.py  # Uses current directory by default
 
 # Scrape Reddit user images
-python reddit_scrape.py      # Edit script first: set username
+python reddit_scraper.py   # Edit script first: set username
 
 # Verify backup
-./verify_backup.sh           # Edit script first: set source/dest paths
+./verify_backup.sh         # Edit script first: set source/dest paths
 ```
 
-⚠️ **Warning:** Scripts have hardcoded paths - customize before running. Some operations are destructive.
+**Warning:** Scripts may have hardcoded paths - customize before running. Some operations are destructive (file moves).
 
 ## Documentation
 

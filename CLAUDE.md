@@ -6,38 +6,36 @@ Collection of Python and Bash scripts for household automation tasks.
 
 **Python Scripts:**
 ```bash
-pip install exifread requests beautifulsoup4
+pip install exifread requests
 ```
 
-**Python version:** 3.6+ (tested on 3.x)
+**Python version:** 3.6+
 
 ## Scripts
 
-### Picture_Foldering.py
-Organize photos into year-based folders using EXIF metadata
+### photo_organizer.py
+Organize photos into year/month/day folders using EXIF metadata
 
 ```bash
-python Picture_Foldering.py
+cd /path/to/photos
+python photo_organizer.py
 ```
 
 **What it does:**
-- Scans directory for images (jpg, png, gif, raw, cr2, tiff, nef, etc.)
+- Scans directory for images (jpg, jpeg, png, gif, bmp, raw, cr2, tiff, nef, etc.)
 - Extracts EXIF "DateTimeOriginal" metadata
-- Creates year folders (e.g., "2023/", "2024/")
-- **Moves** images into corresponding year folders
+- Creates year/month/day folders (e.g., "2023/06/15/")
+- **Moves** images into corresponding date folders
 
-**Configuration:** Edit line 6 - `root_path = '/path/to/image/folder'`
+**Configuration:** Uses current working directory by default (`os.getcwd()`)
 
-**⚠️ Warning:** Moves files permanently - test on copies first or use version 2
+**Warning:** Moves files permanently - test on copies first
 
-### Picture_Foldering2.py
-Enhanced version with additional features (compare to version 1 for differences)
-
-### reddit_scrape.py
+### reddit_scraper.py
 Download all images posted by a Reddit user
 
 ```bash
-python reddit_scrape.py
+python reddit_scraper.py
 ```
 
 **What it does:**
@@ -46,13 +44,10 @@ python reddit_scrape.py
 - Handles pagination for users with many posts
 
 **Configuration:**
-- Line 7: `user = "RailScales"` (change to target username)
-- Line 8: `folder = "reddit_images"` (destination folder)
+- Edit `user` variable (change to target username)
+- Edit `folder` variable (destination folder)
 
-**Dependencies:** requests, beautifulsoup4
-
-### reddit_scrape2.py
-Enhanced version with better pagination and error handling
+**Dependencies:** requests
 
 ### verify_backup.sh
 Verify backup integrity by comparing SHA-1 hashes
@@ -68,12 +63,10 @@ Verify backup integrity by comparing SHA-1 hashes
 - Shows progress percentage
 
 **Configuration:**
-- Line 3: `SOURCE_DIR="/Volumes/Backblaze_MacEx4TB32540642"`
-- Line 4: `DEST_DIR="/Volumes/My Passport Mac 4TB"`
+- `SOURCE_DIR` - path to source drive
+- `DEST_DIR` - path to destination drive
 
-**⚠️ Warning:** Very slow for large backups (SHA-1 hashing every file)
-
-**When to use:** Verify backup drives after large copy operations
+**Warning:** Very slow for large backups (SHA-1 hashing every file)
 
 ## Usage Patterns
 
@@ -82,9 +75,11 @@ Verify backup integrity by comparing SHA-1 hashes
 # 1. Backup photos first!
 cp -r /path/to/photos /path/to/backup
 
-# 2. Edit Picture_Foldering.py - set root_path
+# 2. Navigate to photo directory
+cd /path/to/photos
+
 # 3. Run organizer
-python Picture_Foldering.py
+python photo_organizer.py
 
 # 4. Verify results before deleting backup
 ```
@@ -92,11 +87,11 @@ python Picture_Foldering.py
 ### Reddit Scraping Workflow
 ```bash
 # 1. Install dependencies
-pip install requests beautifulsoup4
+pip install requests
 
-# 2. Edit reddit_scrape.py - set username
+# 2. Edit reddit_scraper.py - set username
 # 3. Run scraper
-python reddit_scrape.py
+python reddit_scraper.py
 
 # Images saved to ./reddit_images/
 ```
@@ -115,8 +110,7 @@ chmod +x verify_backup.sh
 
 ## Gotchas
 
-- **Picture_Foldering:** Moves files, doesn't copy - destructive operation
-- **Reddit scrapers:** Respect Reddit API rate limits (add delays for large scrapes)
+- **photo_organizer:** Moves files, doesn't copy - destructive operation
+- **Reddit scraper:** Respect Reddit API rate limits (add delays for large scrapes)
 - **verify_backup.sh:** Extremely slow - SHA-1 hash every file (can take hours/days)
-- **Python paths:** All scripts have hardcoded paths - customize before running
-- **EXIF data:** Picture_Foldering skips files without EXIF DateTimeOriginal tag
+- **EXIF data:** photo_organizer skips files without EXIF DateTimeOriginal tag
